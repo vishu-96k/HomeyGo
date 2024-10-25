@@ -1,0 +1,206 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+   
+}
+
+/* navbar styling */
+.container{
+    flex: 1;
+}
+
+.navbar {
+    height: 4rem;
+    background-color: white;
+}
+
+.fa-compass {
+    color: red;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color : #222222 !important;
+}
+
+
+/* footer styling */
+.f-info-links a{
+    text-decoration: none;
+    color: #222121;
+
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-links, .f-info-socials, .f-info-brand{
+    width: 100%;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.f-info-socials i{
+    margin-right: 1rem;
+}
+
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+
+/* cards styling of index.ejs*/
+
+.listings-heading {
+    margin-bottom: 2rem; /* Adjust this value for more or less space */
+}
+
+/* Cards styling of index.ejs */
+.row {
+    overflow: visible; /* Prevent overflow when the card scales */
+}
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    transition: transform 0.5s ease, padding 0.5s ease; /* Smooth transition for scaling and padding */
+    padding: 1px; /* Initial padding */
+    padding-top: 20px;
+    /* padding-top: 40px; */
+}
+
+.listing-card:hover {
+    transform: scale(1.1); /* Scale the card to 105% on hover */
+    padding-left: 25px;/* Increase padding on hover for more space */
+    padding-right: 25px;
+    opacity: 0.7;
+}
+
+.card-img-top {
+    border-radius: 2rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.5s ease; /* Smooth transition for image scaling */
+}
+
+.listing-card:hover .card-img-top {
+    transform: scale(1.1); /* Scale the image to 110% on hover */
+   
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: bolder;
+}
+
+
+.listing-link {
+    text-decoration: none !important;
+    color: black;
+}
+
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.4;
+    background-color: white;
+    /* border-radius: 30px; */
+    
+}
+
+
+/* new.ejs page  btn styling */
+.add-btn {
+    background-color: red;
+    border: none;
+    color: white;
+    height: 35px;
+    width: 80px;
+    border-radius: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.add-btn:hover {
+     /* Change color on hover */
+    background-color: #e26161; /* Change color on hover */
+    transform: scale(1.2); /* Scale up slightly */
+}
+
+
+/* Edit page btns edit.ejs */
+.del-btn{
+    background-color: black;
+    border: none;
+    color: white;
+    height: 35px;
+    width: 80px;
+    border-radius: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.del-btn:hover {
+    background-color: #5f5151; /* Change color on hover */
+    transform: scale(1.2); /* Scale up slightly */
+}
+.edit-btn{
+    background-color: red;
+    border: none;
+    color: white;
+    padding-left: 25px;
+    padding-top: 5px;
+    height: 35px;
+    width: 80px;
+    outline: none;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.edit-btn:hover {
+    background-color: #ce5a5a; /* Change color on hover */
+    transform: scale(1.2); /* Scale up slightly */
+    outline: none;
+    text-decoration: none; /* Ensure underline doesn't appear on hover */
+    outline: none;
+    color: white;
+}
+
+
+/* show page show.ejs*/
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+/* map styling */
+#map{
+    height: 400px;
+    width: 80vh;
+}
+

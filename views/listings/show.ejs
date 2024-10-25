@@ -1,0 +1,206 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="row mt-3">
+        <div class="col-8 offset-3 ">
+
+            <h3>
+                <%= listing.title %>
+            </h3>
+        </div>
+        <div class="card listing-card col-6 offset-3 show-card">
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="image loding" />
+        </div>
+        <div class=" col-6 offset-3 show-card card-body">
+            <p class="card-text"> <i><b>Owned By:</b>
+                    <%= listing.owner.username %> <br>
+                </i>
+            <p class="card-text">
+                <%= listing.description %>
+            </p>
+            <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %>
+            </p>
+            <p class="card-text">
+                <%= listing.location %>
+            </p>
+            <p class="card-text">
+                <%= listing.country %>
+            </p>
+            <br>
+        </div>
+
+        <br>
+        <br>
+
+        <%  if(currUser && listing.owner._id.equals(currUser._id)) {   %>
+            <div class="btns">
+
+                <a class=" edit-btn  offset-3" href="/listings/<%= listing._id %>/edit"> Edit </a>
+    
+                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                    <button class="del-btn offset-3">Delete</button>
+                </form>
+    
+            </div>
+            <br>
+            <% }   %>
+
+
+        <!-- review wala form -->
+
+            <div class="col-8 offset-3 mb-3">
+                <hr>
+                <h4>Leave a Review</h4>
+                <% if(currUser) { %>
+                <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+                   
+                    <div class="mb-3 mt-3">
+                        <label class="form-lable" for="rating">Rating</label>
+                    <fieldset class="starability-slot">
+                      
+                        
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                      </fieldset>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label class="form-lable" for="comment">Comments</label>
+                        <textarea required class="form-control" name="review[comment]" id="comment" cols="30"
+                            rows="3"></textarea>
+                        <div class="invalid-feedback">please add some comments for review</div>
+                    </div>
+                    <br>
+                    <button class="btn-outline-dark btn add-btn">Submit</button>
+                </form>
+                <% } %>
+                    <hr>
+
+
+                    <!-- review showing  -->
+                    <% if(listing.reviews.length >0) { %>
+                    <div class="row">
+                        <p><b>All Reviews</b></p>
+                        <% for (let review of listing.reviews) { %>
+                            <div class="card col-5 mb-3 ms-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        @<%= review.author.username %>
+                                    </h5>
+                                    <p class="starability-result card-text" 
+                                    data-rating= <%= review.rating %> > </p>
+                                    <p class="card-text">
+                                        <%= review.comment %>   
+                                    </p>
+                                   
+                                    
+                                </div>
+                                <br>
+                                
+                                <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                    class="mb-3" method="POST"> <button class="del-btn "> Delete </button></form> <br>
+                            
+                            </div>
+                            <% } %>
+                    </div>
+                    <% } %>
+                    
+
+            </div>
+            <div class="col-6 offset-3 mb-3">
+                <h3>Where you'll be</h3>
+                <div id="map"></div>
+            </div>
+            
+
+    </div>
+
+
+  <!-- script for map map.js   -->
+ 
+
+  
+    <script>
+        let mapToken = "<%= process.env.MAP_TOKEN %>"
+        mapboxgl.accessToken = mapToken;
+        const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>
+        const listing = <%- JSON.stringify(listing) %>
+    
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            center: coordinates, // starting position [lng, lat]
+            zoom: 8 // keeping your zoom level as it is
+        });
+    
+        console.log(coordinates);
+    
+        // Define a default popup offset value
+        const popupOffsets = {
+            'top': [0, 25],   // 25px above the marker
+            'bottom': [0, -25], // 25px below the marker
+            'left': [25, 0],  // 25px to the left
+            'right': [-25, 0] // 25px to the right
+        };
+    
+        // Create the popup
+        const popup = new mapboxgl.Popup({ offset: popupOffsets, closeOnClick: true })
+            .setHTML(`<h4>${listing.location}</h4><p>Exact Location provided after booking! </p>`)
+            .setLngLat(coordinates);
+    
+        // Create the marker
+        const marker = new mapboxgl.Marker({ color: 'red' })
+            .setLngLat(coordinates)
+            .addTo(map);
+    
+        // Show popup initially when the page loads
+        popup.addTo(map);
+    
+        // Set flag to track whether the popup is manually closed
+        let popupClosedByUser = false;
+    
+        // Listen for the popup close event
+        popup.on('close', () => {
+            popupClosedByUser = true;
+        });
+    
+        // Open the popup on hover only if it was closed by the user
+        marker.getElement().addEventListener('mouseenter', () => {
+            if (popupClosedByUser) {
+                popup.addTo(map);
+            }
+        });
+    
+        // Close the popup on mouse leave
+        marker.getElement().addEventListener('mouseleave', () => {
+            if (popupClosedByUser) {
+                popup.remove();
+            }
+        });
+    </script> 
+    
+<!-- 
+    <script>
+        let mapToken = "<%= process.env.MAP_TOKEN %>";
+        mapboxgl.accessToken = mapToken;
+        const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+        
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // Set to satellite mode
+            center: coordinates, // starting position [lng, lat]
+            zoom: 9 // starting zoom
+        });
+        
+        console.log(coordinates);
+        const marker = new mapboxgl.Marker({ color: 'red' })
+        .setLngLat(coordinates) // listing.geometry.coordinates
+        .addTo(map);
+    </script> -->
+    

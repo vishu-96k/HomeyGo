@@ -1,0 +1,76 @@
+<nav class=" navbar  navbar-expand-lg  bg-light border-bottom sticky-top">
+    <div class="container-fluid">
+
+      
+
+
+      
+      <a class="navbar-brand " href="/listings"> <img class="navbar-logo " src="https://res.cloudinary.com/ddv9illly/image/upload/v1729857306/homeyGo_dev/m6snhsdtriu2xkg1fl1j.png" 
+        alt="HomeyGo Logo" style="height: 80px; width: auto;"> </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      
+      <div class="collapse navbar-collapse  " id="navbarNavAltMarkup" >
+        <div class="navbar-nav">       
+          <a class="navbar-text " href="/listings">Explore </a>
+        </div>
+
+
+        <!-- inner navbar -->
+        <div class="ms-auto inner-navbar">
+        <form class="d-flex" role="search">
+          <input class="search-input" type="search" placeholder="Search Destination" aria-label="Search">
+          <button class="btn-search " type="submit"> search<i class="fa-solid fa-magnifying-glass"></i> </button>
+        </form>
+        </div>
+        
+
+        
+
+        <div class="navbar-nav ms-auto">
+          <a class=" navbar-text  " href="/listings/new">HomeyGo your home</a>
+          <% if(!currUser) { %>
+          
+          <a class=" navbar-text" href="/signup"><b>Sign Up</b></a>
+          <a class=" navbar-text" href="/login"><b>Login</b></a>
+          <% } %>
+          <% if(currUser) { %>
+            
+          <a class=" navbar-text"  href="/logout"><b>Logout</b></a>
+          <% } %>
+
+        </div>
+        
+      </div>
+    </div>
+   
+  </nav>
+   
+        
+
+
+  <script>
+    let lastScrollY = 0;
+    let isSmall = false;  // Keep track of current navbar state
+    
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        const currentScrollY = window.scrollY;
+    
+        // Use a buffer to avoid flickering (smooth threshold detection)
+        if (currentScrollY > 100 && !isSmall) {
+            // If scrolled more than 100px and navbar is not already small, shrink it
+            navbar.classList.add('small');
+            isSmall = true;
+        } else if (currentScrollY <= 50 && isSmall) {
+            // If scrolled less than or equal to 50px and navbar is small, enlarge it
+            navbar.classList.remove('small');
+            isSmall = false;
+        }
+    });
+    </script>
+    

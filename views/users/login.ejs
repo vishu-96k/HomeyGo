@@ -1,0 +1,26 @@
+<% layout("/layouts/boilerplate") %>
+    
+    <div class="row mt-3 ">
+        <div class="col-8 offset-2">
+            <h1>SignUp On HomeyGo</h1>
+            <form action="/login" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-lable">UserName</label>
+                    <input required type="text" name="username" id="username" placeholder="username "
+                        class="form-control" />
+                        <div class="valid-feedback">looks Good!</div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="password" class="form-lable">password</label>
+                    <input required type="password" name="password" id="password" placeholder="password"
+                        class="form-control" />
+                        <div class="valid-feedback">Success!</div>
+                </div>
+                <button class="add-btn" style="background-color: green; color: white;">Log In</button>
+
+
+            </form>
+        </div>
+    </div>
