@@ -6,7 +6,11 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+
+
 const Listing = require("./models/listing.js");
+
+
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -28,8 +32,21 @@ const flash = require("connect-flash");
 const passport =  require("passport"); // user for authentication and authorization automatically
 const LocalStrategy =  require("passport-local");
 const User = require("./models/user.js");
+// const multer  = require('multer')
+// const upload = multer({ dest: 'uploads/' })
+
+
+// const Listing = require("../models/listing.js");
+
+
+const { isLoggedIn, isOwner } = require("./middlewere.js");
+const { authorize } = require("passport");
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const {storage} = require("./cloudConfig.js")
+const upload = multer({ storage: storage })
+const listingController =  require("./controllers/listing.js");
+
+
 
 
 //connection to DB
@@ -106,12 +123,7 @@ app.use((req, res, next)=>{
 
 
 
-// home route
-// app.get('/', (req, res) => {
-//     res.render("./listings/index.ejs");
-//     // res.send("this is root route")
-   
-// });
+app.get('/',wrapAsync( listingController.index ));
 
 
 //listing routes
