@@ -75,8 +75,8 @@ body{
     border: none !important;
     margin-bottom: 2rem;
     transition: transform 0.5s ease, padding 0.5s ease; /* Smooth transition for scaling and padding */
-    padding: 1px; /* Initial padding */
-    padding-top: 20px;
+    padding: 5px; /* Initial padding */
+    padding-top: 40px;
     /* padding-top: 40px; */
 }
 
